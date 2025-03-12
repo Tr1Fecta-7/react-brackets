@@ -4,7 +4,7 @@ import { RoundTitle } from '../components/round';
 import { IRenderSeedProps } from '../types/Seed';
 
 /* ------------------------- default title component ------------------------ */
-export const renderTitle = (title: string | JSX.Element) => <RoundTitle>{title}</RoundTitle>;
+export const renderTitle = (title: string | React.ReactNode) => <RoundTitle>{title}</RoundTitle>;
 
 /* ------------------------- default seed component ------------------------- */
 export const renderSeed = ({ seed, breakpoint, isMiddleOfTwoSided }: IRenderSeedProps) => {

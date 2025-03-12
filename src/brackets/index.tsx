@@ -7,6 +7,9 @@ import { ISingleEliminationProps } from '../types/SingleElimination';
 import { IRoundProps } from '../types/Rounds';
 import { ISeedProps } from '../types/Seed';
 
+// Create a type-safe wrapper for SwipeableViews
+const SafeSwipeableViews = SwipeableViews as any;
+
 const SingleElimination = ({
   rounds,
   rtl = false,
@@ -52,13 +55,15 @@ const SingleElimination = ({
   ));
 
   if (isResponsive) {
-    // Since SwipeableViewsProps have an issue that it uses ref inside of it, We need to remove ref from the object
-    const { ref, ...rest } = swipeableProps;
     return (
-      <Bracket className={bracketClassName} dir={rtl ? 'rtl' : 'ltr'} mobileBreakpoint={mobileBreakpoint}>
-        <SwipeableViews style={{ minHeight: '500px' }} axis={rtl ? 'x-reverse' : 'x'} {...rest}>
+      <Bracket className={bracketClassName} dir={rtl ? "rtl" : "ltr"} mobileBreakpoint={mobileBreakpoint}>
+        <SafeSwipeableViews 
+          style={{ minHeight: "500px" }} 
+          axis={rtl ? "x-reverse" : "x"} 
+          {...swipeableProps}
+        >
           {data}
-        </SwipeableViews>
+        </SafeSwipeableViews>
       </Bracket>
     );
   }
@@ -89,16 +94,16 @@ const SingleElimination = ({
     return (
       <Bracket className={bracketClassName} mobileBreakpoint={mobileBreakpoint}>
         {[
-          getRenderedRounds(0, rounds.length - 1, true, rounds, 'ltr'),
-          getRenderedRounds(rounds.length - 1, rounds.length, false, rounds, 'twoSided'),
-          getRenderedRounds(1, rounds.length, false, [...rounds].reverse(), 'rtl'),
+          getRenderedRounds(0, rounds.length - 1, true, rounds, "ltr"),
+          getRenderedRounds(rounds.length - 1, rounds.length, false, rounds, "twoSided"),
+          getRenderedRounds(1, rounds.length, false, [...rounds].reverse(), "rtl"),
         ]}
       </Bracket>
     );
   }
 
   return (
-    <Bracket className={bracketClassName} dir={rtl ? 'rtl' : 'ltr'} mobileBreakpoint={mobileBreakpoint}>
+    <Bracket className={bracketClassName} dir={rtl ? "rtl" : "ltr"} mobileBreakpoint={mobileBreakpoint}>
       {data}
     </Bracket>
   );
